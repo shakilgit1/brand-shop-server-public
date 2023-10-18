@@ -35,7 +35,7 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
   })
-  
+
   app.post('/brands', async(req, res) =>{
       const products = req.body;
       const result = await allBrands.insertOne(products);
@@ -59,6 +59,12 @@ async function run() {
         const products = req.body;
         const result = await allTechnologies.insertOne(products);
         res.send(result);
+    })
+    app.get('/technologies/:id', async(req, res) =>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)};
+      const result = await allTechnologies.findOne(query);
+      res.send(result);
     })
 
 
