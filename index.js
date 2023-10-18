@@ -29,12 +29,13 @@ async function run() {
     const allBrands = client.db("brandsDB").collection("brands");
     const allTechnologies = client.db("technologiesDB").collection("technologies");
 
-   // 
+   // read
   app.get('/brands', async(req, res) =>{
       const cursor = allBrands.find();
       const result = await cursor.toArray();
       res.send(result);
   })
+  
   app.post('/brands', async(req, res) =>{
       const products = req.body;
       const result = await allBrands.insertOne(products);
@@ -46,7 +47,6 @@ async function run() {
     const result = await allBrands.findOne(query);
     res.send(result);
   })
-
 
 
     // all data collections
