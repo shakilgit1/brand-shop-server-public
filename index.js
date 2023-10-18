@@ -27,6 +27,7 @@ async function run() {
     await client.connect();
     
     const allBrands = client.db("brandsDB").collection("brands");
+    const myCarts = client.db("myCartsDB").collection("carts");
     const allTechnologies = client.db("technologiesDB").collection("technologies");
 
    // read
@@ -67,6 +68,17 @@ async function run() {
       res.send(result);
     })
 
+    // add to cart 
+    app.post('/carts', async(req, res) =>{
+      const item = req.body;
+      const result = await myCarts.insertOne(item);
+      res.send(result);
+    })
+    app.get('/carts', async(req, res) =>{
+      const cursor = myCarts.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
