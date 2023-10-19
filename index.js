@@ -67,6 +67,25 @@ async function run() {
       const result = await allTechnologies.findOne(query);
       res.send(result);
     })
+    app.put('/technologies/:id', async(req, res) =>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const options = { upsert: true };
+      const updateProduct = req.body;
+      const updateDoc = {
+        $set: {
+          name: updateProduct.name,
+          brand: updateProduct.brand,
+          type: updateProduct.type,
+          rating: updateProduct.rating,
+          image: updateProduct.image,
+          price: updateProduct.price,
+          description: updateProduct.description,
+        },
+      };
+    const result = await allTechnologies.updateOne(filter, updateDoc, options);
+    res.send(result);
+    })
 
     // add to cart 
     app.post('/carts', async(req, res) =>{
